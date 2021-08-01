@@ -11,6 +11,8 @@
 #include <QMouseEvent>
 #include <iostream>
 
+#include <gameworld.h>
+
 class CameraTrackballManipulator : public osgGA::TrackballManipulator
 {
 public:
@@ -93,6 +95,7 @@ class QtOSGWidget : public QOpenGLWidget
 public:
 
 
+
   QtOSGWidget(QWidget* parent = nullptr, qreal scaleX=1, qreal scaleY=1)
       : QOpenGLWidget(parent)
         , _mGraphicsWindow(new osgViewer::GraphicsWindowEmbedded( this->x(), this->y(),
@@ -100,6 +103,8 @@ public:
       , m_scaleX(scaleX)
       , m_scaleY(scaleY)
       {
+
+
 
 
 
@@ -164,84 +169,6 @@ protected:
       camera->setViewport(0, 0, this->width()*m_scaleX, this->height()* m_scaleY);
   }
 
-//  virtual bool handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIActionAdapter& us)
-//      {
-
-//          switch(ea.getEventType())
-//              {
-//              case(osgGA::GUIEventAdapter::KEYDOWN):
-//                  {
-//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_F4)
-//                      {
-////                          flushMouseEventStack();
-////                          home(ea,us);
-////                          us.requestRedraw();
-////                          us.requestContinuousUpdate(false);
-//                          return true;
-//                      }
-//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
-//                      {
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("left", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
-
-//                          return true;
-//                      }
-//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
-//                      {
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("left", (bool)false);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
-
-//                          return true;
-//                      }
-//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
-//                      {
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("engine", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
-//                          return true;
-//                      }
-//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
-//                      {
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("engine", (bool)false);
-
-//                          std::cout << "ASDASDASDASDA" << std::endl;
-//                          //                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)true);
-////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
-//                          return true;
-//                      }
-//                  }
-//              break;
-//              case(osgGA::GUIEventAdapter::KEYUP) :
-//              {
-//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
-//                  {
-////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)false);
-//                      return true;
-//                  }
-//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
-//                  {
-////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)false);
-//                      return true;
-//                  }
-//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
-//                  {
-////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)false);
-//                      return true;
-//                  }
-//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
-//                  {
-////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)false);
-//                      return true;
-//                  }
-//              }
-//                                                    break;
-////              default:
-////                  return osgGA::TrackballManipulator::handle(ea,us);
-//              }
-
-//  }
 
   virtual void initializeGL(){
 //      osg::Geode* geode = dynamic_cast<osg::Geode*>(_mViewer->getSceneData());
@@ -259,14 +186,74 @@ protected:
 
   virtual void keyPressEvent(QKeyEvent* event)
   {
-      std::cout << event->key() << std::endl;
-      std::cout << "In lovrieeua " << event->text().toStdString() << std::endl;
+
+//        std::cout << event->key() << std::endl;
+//        std::cout << "In lovrieeua " << event->text().toStdString() << std::endl;
+
+        GameWorld* game_world = GameWorld::getHandle();
+        btosgVehicle* myVehicle = game_world->myVehicle;
+
+        auto pos = myVehicle->vehicle->getChassisWorldTransform().getOrigin();
+        std::cout<< pos.x() << " " << pos.y() << " " << pos.z() << " " << std::endl;
+
+        if (event->key() == 16777237) //down
+        {
+            myVehicle->vehicle->applyEngineForce(-500, 2);
+            myVehicle->vehicle->applyEngineForce(-500, 3);
+        }
+        if (event->text() == 'b') //f4
+        {
+            myVehicle->vehicle->setBrake(10000, 2);
+            myVehicle->vehicle->setBrake(10000, 3);
+            std::cout << "Test" << std::endl;
+        }
+        if (event->text() == 'f')
+        {
+            myVehicle->vehicle->applyEngineForce(500, 2);
+            myVehicle->vehicle->applyEngineForce(500, 3);
+        }
+        if (event->key() == 16777234) //left
+        {
+            myVehicle->vehicle->setSteeringValue(btScalar(0.4), 0);
+            myVehicle->vehicle->setSteeringValue(btScalar(0.4), 1);
+
+
+
+        }
+        if (event->key() == 16777236) //right
+        {
+            myVehicle->vehicle->setSteeringValue(btScalar(-0.4), 0);
+            myVehicle->vehicle->setSteeringValue(btScalar(-0.4), 1);
+
+        }
+        if (event->key() == 16777235) //up
+        {
+            myVehicle->vehicle->applyEngineForce(500, 2);
+            myVehicle->vehicle->applyEngineForce(500, 3);
+        }
   }
 
   virtual void keyReleaseEvent(QKeyEvent* event)
   {
-      std::cout << event->key() << std::endl;
-      std::cout << "In tucurane  " << event->text().toStdString() << std::endl;
+      GameWorld* game_world = GameWorld::getHandle();
+      btosgVehicle* myVehicle = game_world->myVehicle;
+
+      if (event->text() == 'b')
+      {
+          myVehicle->vehicle->setBrake(0, 2);
+          myVehicle->vehicle->setBrake(0, 3);
+      }
+      if (event->key() == 16777236 || event->key() == 16777234) //right
+      {
+          myVehicle->vehicle->setSteeringValue(btScalar(0.), 0);
+          myVehicle->vehicle->setSteeringValue(btScalar(0.), 1);
+
+      }
+      if (event->key() == 16777235 || event->key() == 16777237) //up
+      {
+          myVehicle->vehicle->applyEngineForce(0, 2);
+          myVehicle->vehicle->applyEngineForce(0, 3);
+      }
   }
 
   virtual void mousePressEvent(QMouseEvent* event)
@@ -275,7 +262,7 @@ protected:
       switch (event->button()){
       case Qt::LeftButton:
           button = 1;
-          std::cout<< "Tessst" << std::endl;
+//          std::cout<< "Tessst" << std::endl;
           break;
       case Qt::MiddleButton:
           button = 2;

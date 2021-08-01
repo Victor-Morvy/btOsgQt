@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     btosg.cpp \
     followupdater.cpp \
+    gameworld.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -20,6 +21,7 @@ HEADERS += \
     btosgHUD.h \
     btosgVehicle.h \
     followupdater.h \
+    gameworld.h \
     mainwindow.h
 
 FORMS += \
