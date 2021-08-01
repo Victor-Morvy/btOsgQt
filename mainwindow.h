@@ -28,9 +28,14 @@
 #include "btosgVehicle.h"
 //#include "PaintBezier.h"
 
+#include <QTimer>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
+
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -40,10 +45,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    btosgWorld* myWorld;
+    void update(); //ms
 
-    // Vehicle
+    btosgWorld myWorld;
     btosgVehicle *myVehicle;
+
+    QTimer* timer;
+
 
 
 private:
@@ -71,10 +79,9 @@ class EventHandler : public osgGA::GUIEventHandler
 {
 public:
     // Create World
-    btosgWorld* myWorld;
-int ResetFlag=0;
+/*
+    int ResetFlag=0;
     // Vehicle
-    btosgVehicle *myVehicle;
 
     bool handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa)
     {
@@ -161,6 +168,7 @@ int ResetFlag=0;
         }
         return true;
     }
+*/
 };
 
 #endif // MAINWINDOW_H

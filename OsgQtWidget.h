@@ -28,8 +28,8 @@ public:
       camera = new osg::Camera;
       camera->setViewport( 0, 0, this->width(), this->height() );
       camera->setClearColor( osg::Vec4( 0.2f, 0.2f, 0.30f, 1.f ) );
-//      float aspectRatio = static_cast<float>( this->width()) / static_cast<float>( this->height() );
-//      camera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
+      float aspectRatio = static_cast<float>( this->width()) / static_cast<float>( this->height() );
+      camera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
       camera->setGraphicsContext( _mGraphicsWindow );
 
       _mViewer = new osgViewer::Viewer;
