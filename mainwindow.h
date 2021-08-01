@@ -28,6 +28,8 @@
 #include "btosgVehicle.h"
 //#include "PaintBezier.h"
 
+
+
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
@@ -35,45 +37,6 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 
-
-
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-    void update(); //ms
-
-    btosgWorld myWorld;
-    btosgVehicle *myVehicle;
-
-    QTimer* timer;
-
-
-
-private:
-    Ui::MainWindow *ui;
-    QtOSGWidget *osg_widget;
-    osg::ref_ptr<osg::Group> root;
-    osg::MatrixTransform* _m;
-    SplineControl* pl;
-    osg::Vec3f xaxis = osg::Vec3f(1.f,0.0f,0.0f);
-    osg::Vec3f yaxis = osg::Vec3f(0.f,1.0f,0.0f);
-    osg::Vec3f zaxis = osg::Vec3f(0.f,0.0f,1.0f);
-
-
-
-//    osg::Vec3f yaxis(0.0f,1.0f,0.0f), zaxis(0.0f,0.0f,1.0f);
-        osg::Matrix rot1;
-        osg::Matrix rot2;
-        osg::Matrix rot3;
-
-
-
-};
 
 class EventHandler : public osgGA::GUIEventHandler
 {
@@ -170,5 +133,46 @@ public:
     }
 */
 };
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+    void update(); //ms
+
+    btosgWorld myWorld;
+    btosgVehicle *myVehicle;
+
+    QTimer* timer;
+    osgViewer::Viewer* viewer;
+
+    EventHandler* event_handler;
+
+
+private:
+    Ui::MainWindow *ui;
+    QtOSGWidget *osg_widget;
+    osg::ref_ptr<osg::Group> root;
+    osg::MatrixTransform* _m;
+    SplineControl* pl;
+    osg::Vec3f xaxis = osg::Vec3f(1.f,0.0f,0.0f);
+    osg::Vec3f yaxis = osg::Vec3f(0.f,1.0f,0.0f);
+    osg::Vec3f zaxis = osg::Vec3f(0.f,0.0f,1.0f);
+
+
+
+//    osg::Vec3f yaxis(0.0f,1.0f,0.0f), zaxis(0.0f,0.0f,1.0f);
+        osg::Matrix rot1;
+        osg::Matrix rot2;
+        osg::Matrix rot3;
+
+
+
+};
+
 
 #endif // MAINWINDOW_H

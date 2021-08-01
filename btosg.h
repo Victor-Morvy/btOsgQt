@@ -270,8 +270,7 @@ public:
             free(name);
             name = NULL;
         }
-    }
-    void print();
+    }   void print();
     void setName(char const *n) {
         /// Sets the object's name.
         name = strdup(n);

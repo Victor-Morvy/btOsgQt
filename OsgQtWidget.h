@@ -9,6 +9,84 @@
 #include <osgGA/TrackballManipulator>
 #include <osg/Material>
 #include <QMouseEvent>
+#include <iostream>
+
+class CameraTrackballManipulator : public osgGA::TrackballManipulator
+{
+public:
+    CameraTrackballManipulator():osgGA::TrackballManipulator()
+    {}
+
+    virtual bool handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIActionAdapter& us)
+    {
+
+        switch(ea.getEventType())
+            {
+            case(osgGA::GUIEventAdapter::KEYDOWN):
+                {
+                    if (ea.getKey() == osgGA::GUIEventAdapter::KEY_F4)
+                    {
+                        std::cout << "F4" <<std::endl;
+//                        flushMouseEventStack();
+//                        home(ea,us);
+//                        us.requestRedraw();
+//                        us.requestContinuousUpdate(false);
+                        return true;
+                    }
+                    if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+                    {
+
+                        std::cout << "1" <<std::endl;
+                        return true;
+                    }
+                    if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
+                    {
+                        std::cout << "2" <<std::endl;
+                         return true;
+                    }
+                    if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
+                    {
+                     std::cout << "3" <<std::endl;
+                     return true;
+                    }
+                    if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
+                    {
+                       std::cout << "4" <<std::endl;
+                       return true;
+                    }
+                }
+            break;
+            case(osgGA::GUIEventAdapter::KEYUP) :
+            {
+                if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+                {
+                  std::cout << "5" <<std::endl;
+                  return true;
+                }
+                if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
+                {
+                  std::cout << "6" <<std::endl;
+                  return true;
+                }
+                if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
+                {
+                   std::cout << "7" <<std::endl;
+                   return true;
+                }
+                if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
+                {
+                   std::cout << "8" <<std::endl;
+                   return true;
+                }
+            }
+                                                  break;
+            default:
+                return osgGA::TrackballManipulator::handle(ea,us);
+            }
+        return false;
+    }
+
+};
 
 class QtOSGWidget : public QOpenGLWidget
 {
@@ -59,6 +137,7 @@ public:
 //      _mViewer->setThreadingModel(osgViewer::Viewer::SingleThreaded);
 //      _mViewer->realize();
 
+      setFocus();
       }
 
 
@@ -85,6 +164,85 @@ protected:
       camera->setViewport(0, 0, this->width()*m_scaleX, this->height()* m_scaleY);
   }
 
+//  virtual bool handle(const osgGA::GUIEventAdapter& ea,osgGA::GUIActionAdapter& us)
+//      {
+
+//          switch(ea.getEventType())
+//              {
+//              case(osgGA::GUIEventAdapter::KEYDOWN):
+//                  {
+//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_F4)
+//                      {
+////                          flushMouseEventStack();
+////                          home(ea,us);
+////                          us.requestRedraw();
+////                          us.requestContinuousUpdate(false);
+//                          return true;
+//                      }
+//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+//                      {
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("left", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
+
+//                          return true;
+//                      }
+//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
+//                      {
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("left", (bool)false);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
+
+//                          return true;
+//                      }
+//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
+//                      {
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("engine", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
+//                          return true;
+//                      }
+//                      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
+//                      {
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("engine", (bool)false);
+
+//                          std::cout << "ASDASDASDASDA" << std::endl;
+//                          //                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)true);
+////                          _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("vehicleID", (unsigned int)1);
+//                          return true;
+//                      }
+//                  }
+//              break;
+//              case(osgGA::GUIEventAdapter::KEYUP) :
+//              {
+//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+//                  {
+////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)false);
+//                      return true;
+//                  }
+//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Right)
+//                  {
+////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletSteeringCommand", (bool)false);
+//                      return true;
+//                  }
+//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Up)
+//                  {
+////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)false);
+//                      return true;
+//                  }
+//                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
+//                  {
+////                      _openIG->getPluginContext().getOrCreateValueObject()->setUserValue("BulletEngineCommand", (bool)false);
+//                      return true;
+//                  }
+//              }
+//                                                    break;
+////              default:
+////                  return osgGA::TrackballManipulator::handle(ea,us);
+//              }
+
+//  }
+
   virtual void initializeGL(){
 //      osg::Geode* geode = dynamic_cast<osg::Geode*>(_mViewer->getSceneData());
 //      osg::StateSet* stateSet = geode->getOrCreateStateSet();
@@ -99,12 +257,25 @@ protected:
       this->getEventQueue()->mouseMotion(event->x()*m_scaleX, event->y()*m_scaleY);
   }
 
+  virtual void keyPressEvent(QKeyEvent* event)
+  {
+      std::cout << event->key() << std::endl;
+      std::cout << "In lovrieeua " << event->text().toStdString() << std::endl;
+  }
+
+  virtual void keyReleaseEvent(QKeyEvent* event)
+  {
+      std::cout << event->key() << std::endl;
+      std::cout << "In tucurane  " << event->text().toStdString() << std::endl;
+  }
+
   virtual void mousePressEvent(QMouseEvent* event)
   {
       unsigned int button = 0;
       switch (event->button()){
       case Qt::LeftButton:
           button = 1;
+          std::cout<< "Tessst" << std::endl;
           break;
       case Qt::MiddleButton:
           button = 2;
@@ -124,6 +295,7 @@ protected:
       switch (event->button()){
       case Qt::LeftButton:
           button = 1;
+          std::cout<< "Test" << std::endl;
           break;
       case Qt::MiddleButton:
           button = 2;
@@ -145,6 +317,46 @@ protected:
       this->getEventQueue()->mouseScroll(motion);
   }
 
+  virtual bool handleKeyDown( const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us )
+  {
+      if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Down)
+      {
+          std::cout << "OI" << std::endl;
+      }
+
+      switch(ea.getEventType())
+        {
+         case(osgGA::GUIEventAdapter::KEYDOWN):
+             {
+                 if (ea.getKey() == osgGA::GUIEventAdapter::KEY_F4)
+                 {
+
+                     std::cout << "asd" << std::endl;
+                 }
+                 if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+                 {
+                     std::cout << "er" << std::endl;
+                 }
+
+              }
+          break;
+          case(osgGA::GUIEventAdapter::KEYUP) :
+           {
+                  if (ea.getKey() == osgGA::GUIEventAdapter::KEY_Left)
+                  {
+                      std::cout << "yu" << std::endl;
+                  }
+           }
+          break;
+      }
+
+}
+
+
+  virtual bool handleKeyUp( const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us )
+  {
+
+  }
 
 
   virtual bool event(QEvent* event)

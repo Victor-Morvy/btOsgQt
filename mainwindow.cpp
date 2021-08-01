@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
     myRamp->setMaterial(matRamp);
 
     // Creating the viewer
-    osgViewer::Viewer* viewer = osg_widget->getViewer();
+    viewer = osg_widget->getViewer();
 
     // Setup camera
     osg::Matrix matrix;
@@ -78,7 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     viewer->getCamera()->setViewMatrix(matrix);
 
     // add the Event handler
-    viewer->addEventHandler(new EventHandler());
+    event_handler = new EventHandler();
+    viewer->addEventHandler(event_handler);
 
     // Light
     osg::ref_ptr<osg::LightSource> ls = new osg::LightSource;
