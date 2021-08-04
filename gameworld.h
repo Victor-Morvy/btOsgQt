@@ -7,6 +7,13 @@
 
 #include <osgUtil/SmoothingVisitor>
 
+#include <osg/Camera>
+#include <osg/MatrixTransform>
+#include <osgDB/ReadFile>
+#include <osgGA/KeySwitchMatrixManipulator>
+#include <osgGA/TrackballManipulator>
+#include <osgGA/NodeTrackerManipulator>
+
 class GameWorld
 {
 public:

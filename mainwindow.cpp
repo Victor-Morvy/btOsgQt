@@ -29,11 +29,33 @@ MainWindow::MainWindow(QWidget *parent)
 
     viewer->setCameraManipulator( GameWorld::getHandle()->manipulator );
 
+//    osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker = new
+//    osgGA::NodeTrackerManipulator;
+//    nodeTracker->setHomePosition( osg::Vec3(0, -10.0, 0), osg::Vec3(), osg::Z_AXIS );
+//    nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
+//    nodeTracker->setRotationMode( osgGA::NodeTrackerManipulator::TRACKBALL );
+//    nodeTracker->setTrackNode( myVehicle->pNode );
+//    osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keySwitch = new osgGA::KeySwitchMatrixManipulator;
+//    keySwitch->addMatrixManipulator( '1', "Trackball", new osgGA::TrackballManipulator );
+//    keySwitch->addMatrixManipulator( '2', "NodeTracker", nodeTracker.get() );
+//    viewer->setCameraManipulator( keySwitch.get() );
+
+    viewer->addEventHandler(new FollowUpdater(myVehicle->pNode));
+
     timer = new QTimer(this);
+
+    realTimer = new QElapsedTimer();
 
     connect(timer, &QTimer::timeout, this, QOverload<>::of(&MainWindow::update));
 
+    timer2 = new QTimer(this);
+
+    connect(timer2, &QTimer::timeout, this, QOverload<>::of(&MainWindow::realTimeUpdate));
+
     timer->start(16);
+    timer2->start(0);
+
+    realTimer->start();
 
 }
 
@@ -48,7 +70,13 @@ void MainWindow::update()
 
     GameWorld::getHandle()->update();
 
-    myWorld->stepSimulation(timer->interval(),10);
 }
 
+void MainWindow::realTimeUpdate()
+{
+    dt = realTimer->elapsed() - lastTime;
 
+    myWorld->stepSimulation(dt,1);
+
+    lastTime = realTimer->elapsed();
+}

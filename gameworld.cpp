@@ -61,6 +61,8 @@ GameWorld::GameWorld()
     // Force the camera to move to the home position
     manipulator->home(0.0);
 
+
+
 }
 
 GameWorld::~GameWorld()

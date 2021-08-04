@@ -48,15 +48,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void update(); //ms
+    void update();
 
     btosgWorld* myWorld;
     btosgVehicle *myVehicle;
 
     QTimer* timer;
+    QTimer* timer2;
+
+    QElapsedTimer* realTimer; //real time tiemr
+
     osgViewer::Viewer* viewer;
 
+    float dt; //ms
+    float lastTime;
 
+    void realTimeUpdate();
 private:
     Ui::MainWindow *ui;
     QtOSGWidget *osg_widget;
