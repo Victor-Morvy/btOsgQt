@@ -8,3 +8,4 @@ osgQtWidget : https://github.com/JimmieKJ/osgQTWidget
 
 Bullet : https://github.com/bulletphysics/bullet3
 
+![Car](https://github.com/Victor-Morvy/btOsgQt/car.png)
