@@ -179,7 +179,8 @@ public:
     btDynamicsWorld *dynamic;	///< Pointer to btDynamicsWorld object.
 #ifdef BTOSG_SHADOW
     /// Pointer to osg::Group object storing the root node of the object tree.
-    osg::ref_ptr<osgShadow::ShadowedScene> scene;
+    osg::ref_ptr<osg::Group> 	scene;
+//    osg::ref_ptr<osgShadow::ShadowedScene> scene;
 #else
     osg::ref_ptr<osg::Group> 	scene;
 #endif
